@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2> Text Generator</h2>
+        
+        <div class="control-box">
+            <label for="bg-input" class="upload-btn">📁 Choose Background Image</label>
+            <input type="file" id="bg-input" accept="image/*">
+            
+            <textarea id="text-input" placeholder="Right Your Text Here..........." rows="3" disabled></textarea>
+            
+            <div class="color-pickers" id="color-section" style="display: none;">
+                <div class="color-field">
+                    <label for="date-color">📅 Date & Time Color</label>
+                    <input type="color" id="date-color" value="#38bdf8">
+                </div>
+                <div class="color-field">
+                    <label for="text-color">✍️ Text Color</label>
+                    <input type="color" id="text-color" value="#ffffff">
+                </div>
+            </div>
+
+            <button id="download-btn" disabled>📥 Download Image</button>
+        </div>
+
+        <div class="preview-box">
+            <canvas id="imageCanvas"></canvas>
+            <p id="placeholder-text">Before you can see the preview, please upload an image and enter some text.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
