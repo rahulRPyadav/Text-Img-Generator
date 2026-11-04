@@ -1,43 +1,339 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>WhatsApp DP & Photo Collage Editor</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Oswald:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div class="container">
-        <h2> Text Generator</h2>
+<div class="container">
+
+    <header class="app-header">
+        <h2>DP Editor</h2>
         
+    </header>
+
+    <div class="main-layout">
+
+        <!-- LEFT SETTINGS -->
+
         <div class="control-box">
-            <label for="bg-input" class="upload-btn">📁 Choose Background Image</label>
-            <input type="file" id="bg-input" accept="image/*">
-            
-            <textarea id="text-input" placeholder="Right Your Text Here..........." rows="3" disabled></textarea>
-            
-            <div class="color-pickers" id="color-section" style="display: none;">
-                <div class="color-field">
-                    <label for="date-color">📅 Date & Time Color</label>
-                    <input type="color" id="date-color" value="#38bdf8">
-                </div>
-                <div class="color-field">
-                    <label for="text-color">✍️ Text Color</label>
-                    <input type="color" id="text-color" value="#ffffff">
-                </div>
+
+            <!-- MULTIPLE IMAGE UPLOAD -->
+
+            <div class="section-title">Background Photos</div>
+
+            <label for="bg-input" class="upload-btn">
+                📁 Add Multiple Photos
+            </label>
+
+            <input type="file" id="bg-input" accept="image/*" multiple>
+
+            <p id="image-name">No images selected</p>
+
+            <div class="photo-info">
+                <span id="photo-count">0 Photos</span>
+                <span>Select a photo to edit it</span>
             </div>
 
-            <button id="download-btn" disabled>📥 Download Image</button>
+            <div id="photo-list" class="photo-list">
+                <p class="empty-photos">Your uploaded photos will appear here.</p>
+            </div>
+
+            <div class="photo-actions">
+                <button type="button" id="move-left" class="secondary-btn">← Move</button>
+                <button type="button" id="move-right" class="secondary-btn">Move →</button>
+                <button type="button" id="remove-photo" class="danger-btn">✕ Remove</button>
+            </div>
+
+            <!-- COLLAGE LAYOUT -->
+
+            <div class="section-title">Collage Layout</div>
+
+            <div class="field">
+                <label for="collage-layout">Choose Layout</label>
+
+                <select id="collage-layout">
+                    <option value="grid2">2 Column Grid</option>
+                    <option value="grid3" selected>3 Column Grid</option>
+                    <option value="grid4">4 Column Grid</option>
+                    <option value="columns2">2 Column Vertical</option>
+                    <option value="columns3">3 Column Vertical</option>
+                    <option value="mosaic">Mosaic Collage</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="grid-gap">
+                    Photo Spacing: <span id="gap-value">8px</span>
+                </label>
+                <input type="range" id="grid-gap" min="0" max="40" value="8">
+            </div>
+
+            <div class="field">
+                <label for="corner-radius">
+                    Corner Radius: <span id="radius-value">8px</span>
+                </label>
+                <input type="range" id="corner-radius" min="0" max="60" value="8">
+            </div>
+
+            <div class="field">
+                <label for="grid-color">Grid Background Color</label>
+                <input type="color" id="grid-color" value="#ffffff">
+            </div>
+
+            <div class="field">
+                <label for="grid-border">
+                    Photo Border: <span id="border-value">0px</span>
+                </label>
+                <input type="range" id="grid-border" min="0" max="15" value="0">
+            </div>
+
+            <!-- SELECTED IMAGE -->
+
+            <div class="section-title">Selected Photo Editing</div>
+
+            <p class="hint">
+                Select a photo above, or click a photo in the preview.
+                Drag the photo to reposition it.
+            </p>
+
+            <div class="field">
+                <label for="image-zoom">
+                    Selected Photo Zoom: <span id="zoom-value">100%</span>
+                </label>
+                <input type="range" id="image-zoom" min="100" max="300" value="100">
+            </div>
+
+            <button type="button" id="reset-photo" class="secondary-btn">
+                ↺ Reset Selected Photo
+            </button>
+
+            <!-- TEXT -->
+
+            <div class="section-title">Your Text</div>
+
+            <textarea id="text-input" rows="4" placeholder="Write your text here..."></textarea>
+
+            <div class="section-title">Text Settings</div>
+
+            <div class="field">
+                <label for="text-size">Text Size: <span id="size-value">56px</span></label>
+                <input type="range" id="text-size" min="16" max="120" value="56">
+            </div>
+
+            <div class="field">
+                <label for="font-family">Font Family</label>
+                <select id="font-family">
+                    <option value="Montserrat">Montserrat</option>
+                    <option value="Poppins">Poppins</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Oswald">Oswald</option>
+                    <option value="Playfair Display">Playfair Display</option>
+                    <option value="Lato">Lato</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Verdana">Verdana</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="font-weight">Font Weight</label>
+                <select id="font-weight">
+                    <option value="400">Regular</option>
+                    <option value="500">Medium</option>
+                    <option value="600">Semi Bold</option>
+                    <option value="700" selected>Bold</option>
+                    <option value="800">Extra Bold</option>
+                    <option value="900">Black</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="text-align">Text Alignment</label>
+                <select id="text-align">
+                    <option value="center">Center</option>
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                </select>
+            </div>
+
+            <div class="section-title">Text Effects</div>
+
+            <div class="field">
+                <label for="stroke-width">Outline Thickness: <span id="stroke-value">0px</span></label>
+                <input type="range" id="stroke-width" min="0" max="10" value="0">
+            </div>
+
+            <div class="field">
+                <label for="stroke-color">Outline Color</label>
+                <input type="color" id="stroke-color" value="#000000">
+            </div>
+
+            <div class="field">
+                <label for="shadow-color">Shadow Color</label>
+                <input type="color" id="shadow-color" value="#000000">
+            </div>
+
+            <div class="field">
+                <label for="shadow-blur">Shadow Blur: <span id="shadow-blur-value">10px</span></label>
+                <input type="range" id="shadow-blur" min="0" max="40" value="10">
+            </div>
+
+            <div class="field">
+                <label for="shadow-x">Shadow Horizontal: <span id="shadow-x-value">3px</span></label>
+                <input type="range" id="shadow-x" min="-30" max="30" value="3">
+            </div>
+
+            <div class="field">
+                <label for="shadow-y">Shadow Vertical: <span id="shadow-y-value">3px</span></label>
+                <input type="range" id="shadow-y" min="-30" max="30" value="3">
+            </div>
+
+            <div class="field">
+                <label for="letter-spacing">Letter Spacing: <span id="letter-value">0px</span></label>
+                <input type="range" id="letter-spacing" min="-2" max="15" step="0.5" value="0">
+            </div>
+
+            <div class="field">
+                <label for="line-height">Line Height: <span id="line-value">1.3</span></label>
+                <input type="range" id="line-height" min="0.8" max="2.5" step="0.1" value="1.3">
+            </div>
+
+            <div class="field">
+                <label for="text-opacity">Text Opacity: <span id="opacity-value">100%</span></label>
+                <input type="range" id="text-opacity" min="0" max="100" value="100">
+            </div>
+
+            <div class="field">
+                <label for="text-color">Text Color</label>
+                <input type="color" id="text-color" value="#ffffff">
+            </div>
+
+            <!-- DATE AND TIME -->
+
+            <div class="section-title">Date & Time</div>
+
+            <div class="field">
+                <label for="date-format">Date Format</label>
+                <select id="date-format">
+                    <option value="DD MMM YYYY">04 Nov 2026</option>
+                    <option value="DD/MM/YYYY">04/11/2026</option>
+                    <option value="MM/DD/YYYY">11/04/2026</option>
+                    <option value="YYYY-MM-DD">2026-11-04</option>
+                    <option value="DD MMMM YYYY">04 November 2026</option>
+                    <option value="dddd, DD MMM YYYY">Wednesday, 04 Nov 2026</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="time-format">Time Format</label>
+                <select id="time-format">
+                    <option value="12">12 Hour</option>
+                    <option value="24">24 Hour</option>
+                    <option value="none">Hide Time</option>
+                </select>
+            </div>
+
+            <div class="field checkbox-field">
+                <label><input type="checkbox" id="show-date" checked> Show Date & Time</label>
+            </div>
+
+            <div class="field">
+                <label for="date-color">Date Color</label>
+                <input type="color" id="date-color" value="#38bdf8">
+            </div>
+
+            <!-- IMAGE FILTERS -->
+
+            <div class="section-title">Image Adjustments</div>
+
+            <div class="field">
+                <label for="brightness">Brightness: <span id="brightness-value">100%</span></label>
+                <input type="range" id="brightness" min="0" max="200" value="100">
+            </div>
+
+            <div class="field">
+                <label for="contrast">Contrast: <span id="contrast-value">100%</span></label>
+                <input type="range" id="contrast" min="0" max="200" value="100">
+            </div>
+
+            <div class="field">
+                <label for="blur">Blur: <span id="blur-value">0px</span></label>
+                <input type="range" id="blur" min="0" max="15" value="0">
+            </div>
+
+            <div class="field">
+                <label for="overlay-opacity">Black Overlay: <span id="overlay-value">45%</span></label>
+                <input type="range" id="overlay-opacity" min="0" max="100" value="45">
+            </div>
+
+            <!-- SAFE AREA -->
+
+            <div class="section-title">WhatsApp DP</div>
+
+            <div class="field checkbox-field">
+                <label><input type="checkbox" id="show-safe-area" checked> Show Circular Safe Area</label>
+            </div>
+
+            <p class="hint">Keep important content inside the circle.</p>
+
+            <!-- RESET AND DOWNLOAD -->
+
+            <div class="section-title">Actions</div>
+
+            <button type="button" id="reset-position" class="secondary-btn">↺ Reset Text Position</button>
+            <button type="button" id="reset-date-position" class="secondary-btn">↺ Reset Date Position</button>
+            <button type="button" id="reset-all" class="secondary-btn">↺ Reset All Settings</button>
+
+            <button type="button" id="download-btn" disabled>
+                📥 Download WhatsApp DP (1080×1080)
+            </button>
+
         </div>
 
-        <div class="preview-box">
-            <canvas id="imageCanvas"></canvas>
-            <p id="placeholder-text">Before you can see the preview, please upload an image and enter some text.</p>
+        <!-- RIGHT PREVIEW -->
+
+        <div class="preview-container">
+
+            <div class="preview-heading">
+                <h3>Live Collage Preview</h3>
+                <span id="preview-status">Add photos</span>
+            </div>
+
+            <div class="preview-box">
+                <canvas id="imageCanvas"></canvas>
+
+                <p id="placeholder-text">
+                    Add multiple photos to create your collage.
+                    <br><br>
+                    Select, rearrange and customize your photos.
+                </p>
+            </div>
+
+            <!-- <p class="drag-hint">
+                💡 Click a photo to select it. Drag to reposition.
+            </p> -->
+
+            <!-- <div class="export-info">
+                <span>1080 × 1080 px</span>
+                <span>Square Collage</span>
+                <span>HD JPG</span>
+            </div> -->
+
         </div>
+
     </div>
+</div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
